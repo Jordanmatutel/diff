@@ -65,9 +65,9 @@ test_mean = test_loss / len(test)
 
 
 # Export the data into one document CSV
-data = pd.DataFrame(columns=["x_train", "x_test", "noise_train", "noise_test", "result"])
-data["x_test"] = x_test
-data["noise_test"] = noise_test
+data = pd.DataFrame(columns=["x_train", "noise_train", "result"])
+data["x_train"] = x_train
+data["noise_train"] = noise_train
 data["result"] = future_x
 data["conventional"] = result_y
 data.to_csv("data.csv", index=False)
