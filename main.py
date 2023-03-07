@@ -12,19 +12,13 @@ noise_test = np.random.normal(0, 0.3, n)
 
 # Calculate the difference between our data.
 diff = np.diff(x_train)
+diff = np.append(diff, 0)
+
 diff_test = np.diff(x_test)
-
-# The size of y its going to be y = x - 1 so we adapt it.
-c = []
-for i in range(1, len(noise_train)):
-        c.append(noise_train[i])
-
-d = []
-for i in range(1, len(noise_test)):
-        d.append(noise_test[i])
+diff_test = np.append(diff_test, 0)
 
 # Makes the differential regression approximation for the next period of X
-coefficient = np.polyfit(c, diff, 2)
+coefficient = np.polyfit(noise_train, diff, 2)
 
 # Test the differential regression using another set of data.
 result_list = []
@@ -34,13 +28,12 @@ for i in range(len(diff_test)):
     m = coefficient[2]
     result = (w2 * diff_test[i]) + (w * diff_test[i]) + m
     result_list.append(result)
-result_list.append(0)
 
-# Makes the prediction in the future X
-future_x = []
+# Makes the difference between the X of the actual period and to the X of the next period.
+next_x = []
 for i in range(len(result_list)):
     c = result_list[i] + noise_train[i]
-    future_x.append(c)
+    next_x.append(c)
 
 # Creates the conventional lineal regression.
 conventional = np.polyfit(noise_train, x_train, 2)
@@ -65,9 +58,9 @@ test_mean = test_loss / len(test)
 
 
 # Export the data into one document CSV
-data = pd.DataFrame(columns=["x_train", "noise_train", "result"])
+data = pd.DataFrame(columns=["x_train", "noise_train", "estimation", "conventional"])
 data["x_train"] = x_train
 data["noise_train"] = noise_train
-data["result"] = future_x
+data["estimation"] = next_x
 data["conventional"] = result_y
 data.to_csv("data.csv", index=False)
