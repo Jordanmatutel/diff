@@ -35,6 +35,6 @@ next_x.append(0)
 
 # Export the data into one document CSV
 data = pd.DataFrame(columns=["x", "Differential Regression"])
-data["X"] = x_train
+data["x"] = x_train
 data["Differential Regression"] = next_x
 data.to_csv("data.csv", index=False)
