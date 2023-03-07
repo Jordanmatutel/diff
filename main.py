@@ -17,7 +17,7 @@ diff_test = np.diff(x_test)
 diff_test = np.append(diff_test, 0)
 
 # Makes the differential regression approximation for the next period of X
-coefficient = np.polyfit(diff, noise_train, 2)
+coefficient = np.polyfit(noise_train, diff, 2)
 
 # Test the differential regression using another set of data.
 result_list = []
