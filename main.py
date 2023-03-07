@@ -36,6 +36,12 @@ for i in range(len(diff_test)):
     result_list.append(result)
 result_list.append(0)
 
+# Makes the prediction in the future X
+future_x = []
+for i in range(len(result_list)):
+    c = result_list[i] + noise_train[i]
+    future_x.append(c)
+
 # Creates the conventional lineal regression.
 conventional = np.polyfit(noise_train, x_train, 2)
 
@@ -57,12 +63,11 @@ for i in range(len(x_test)):
 test_loss = sum(test)
 test_mean = test_loss / len(test)
 
+
 # Export the data into one document CSV
 data = pd.DataFrame(columns=["x_train", "x_test", "noise_train", "noise_test", "result"])
-data["x_train"] = x_train
 data["x_test"] = x_test
-data["noise_train"] = noise_train
 data["noise_test"] = noise_test
-data["result"] = result_list
+data["result"] = future_x
 data["conventional"] = result_y
 data.to_csv("data.csv", index=False)
