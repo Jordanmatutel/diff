@@ -57,10 +57,16 @@ test_loss = sum(test)
 test_mean = test_loss / len(test)
 
 
+# Sort the data
+next_x.append(0)
+x_train = np.insert(x_train, 0, 0)
+noise_train = np.insert(noise_train, 0, 0)
+result_y = np.insert(result_y, 0, 0)
+
 # Export the data into one document CSV
-data = pd.DataFrame(columns=["x_train", "noise_train", "estimation", "conventional"])
-data["x_train"] = x_train
-data["noise_train"] = noise_train
-data["estimation"] = next_x
-data["conventional"] = result_y
+data = pd.DataFrame(columns=["x", "y", "Differential Regression", "Lineal Regression"])
+data["x"] = x_train
+data["y"] = noise_train
+data["Differential Regression"] = next_x
+data["Lineal Regression"] = result_y
 data.to_csv("data.csv", index=False)
