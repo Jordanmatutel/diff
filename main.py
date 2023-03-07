@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Creates the amount of random data
 n = 100
@@ -13,7 +14,7 @@ diff = np.append(diff, 0)
 # Makes the differential regression approximation for the next period of X
 coefficient = np.polyfit(diff, x_train, 2)
 
-# Test the differential regression using another set of data.
+# Take measure of the results of our linear regression..
 result_list = []
 for i in range(len(x_train)):
     w2 = coefficient[0]
@@ -33,8 +34,21 @@ for i in range(len(result_list)):
 
 next_x.append(0)
 
-# Export the data into one document CSV
-data = pd.DataFrame(columns=["x", "Differential Regression"])
+# Creates one dataframe to fill our graph and saves it as a csv
+
+data = pd.DataFrame(columns=["x", "Differential Regression", "Test", "Test Results"])
 data["x"] = x_train
 data["Differential Regression"] = next_x
 data.to_csv("data.csv", index=False)
+
+# Set the data for our graphs.
+fig, ax = plt.subplots()
+
+# Graph details
+ax.plot(data['Differential Regression'], color='blue')
+ax.scatter(data.index, data['x'], color='red')
+max_y1 = max(data['Differential Regression'].max(), data['x'].max())
+ax.set_ylim(0, max_y1+1)
+ax.legend(['Differential Regression', 'X'])
+
+plt.show()
