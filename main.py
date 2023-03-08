@@ -36,7 +36,7 @@ next_x.append(0)
 
 # Creates one dataframe to fill our graph and saves it as a csv
 
-data = pd.DataFrame(columns=["x", "Differential Regression", "Test", "Test Results"])
+data = pd.DataFrame(columns=["x", "Differential Regression"])
 data["x"] = x_train
 data["Differential Regression"] = next_x
 data.to_csv("data.csv", index=False)
